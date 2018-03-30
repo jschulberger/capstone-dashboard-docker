@@ -6,6 +6,8 @@ services:
       dockerfile: Dockerfile
     expose:
       - "4200"
+    devices:
+      - "/dev/vchiq:/dev/vchiq"
   display:
     image: jschulberger/resin-wpe
     depends_on:
