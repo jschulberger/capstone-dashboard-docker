@@ -5,4 +5,4 @@ EXPOSE 4200
 COPY contents .
 RUN npm install
 
-CMD ["npm", "start"]
+CMD [ "npm", "start" ]
