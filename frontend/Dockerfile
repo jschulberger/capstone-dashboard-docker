@@ -6,6 +6,7 @@ WORKDIR /usr/src/app
 
 # Install app deps
 COPY package*.json ./
+RUN npm install -g @angular/cli
 RUN npm install
 
 # Startup command
