@@ -14,4 +14,3 @@ services:
       - "frontend:fe"
     environment:
       - WPE_BCMRPI_CURSOR=1
-      - WPE_URL="fe:4200"
