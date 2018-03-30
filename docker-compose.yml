@@ -7,8 +7,6 @@ services:
     user: "node"
     expose:
       - "4200"
-    devices:
-      - "/dev/vchiq:/dev/vchiq"
     command: "npm start"
   display:
     image: jschulberger/resin-wpe
@@ -18,5 +16,6 @@ services:
       - "frontend:fe"
     environment:
       - WPE_BCMRPI_CURSOR=1
+      - WPE_URL="https://mrdoob.neocities.org/024/"
     devices:
       - "/dev/vchiq:/dev/vchiq"
