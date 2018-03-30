@@ -1,6 +1,15 @@
-FROM node:8
-
+FROM node:carbon
 EXPOSE 4200
 
-COPY contents /home/node/app/
-RUN cd /home/node/app && npm install
+# Create app directory
+WORKDIR /usr/src/app
+
+# Install app deps
+COPY package*.json ./
+RUN npm install
+
+# Bundle app source
+COPY . .
+
+# Startup command
+CMD [ "npm", "start" ]

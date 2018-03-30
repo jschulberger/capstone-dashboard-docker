@@ -4,16 +4,12 @@ services:
     build:
       context: frontend
       dockerfile: Dockerfile
-    user: "node"
-    expose:
+    ports:
       - "4200"
-    command: "npm start"
   display:
     image: jschulberger/resin-wpe
     depends_on:
       - frontend
-    links:
-      - "frontend:fe"
     environment:
       - WPE_BCMRPI_CURSOR=1
       - WPE_URL="https://mrdoob.neocities.org/024/"
