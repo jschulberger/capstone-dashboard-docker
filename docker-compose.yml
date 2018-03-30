@@ -8,6 +8,7 @@ services:
       - "4200"
     devices:
       - "/dev/vchiq:/dev/vchiq"
+    command: "npm start"
   display:
     image: jschulberger/resin-wpe
     depends_on:
