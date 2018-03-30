@@ -6,7 +6,7 @@ RUN mkdir ~/.npm-global
 RUN npm config set prefix '~/.npm-global'
 RUN touch ~/.profile
 RUN echo 'export PATH=~/.npm-global/bin:$PATH' > ~/.profile
-RUN source ~/.profile
+RUN . ~/.profile
 
 # Install Angular
 RUN npm install -g @angular/cli
