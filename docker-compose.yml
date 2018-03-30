@@ -4,6 +4,7 @@ services:
     build:
       context: frontend
       dockerfile: Dockerfile
+    user: "node"
     expose:
       - "4200"
     devices:
