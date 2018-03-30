@@ -1,0 +1,15 @@
+version: '2'
+services:
+  frontend:
+    build: .
+    expose:
+      - "4200"
+  display:
+    build: https://github.com/resin-io-projects/resin-wpe.git
+    depends_on:
+      - frontend
+    links:
+      - "frontend:fe"
+    environment:
+      - WPE_BCMRPI_CURSOR=1
+      - WPE_URL="fe:4200"
