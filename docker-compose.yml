@@ -16,3 +16,5 @@ services:
       - "frontend:fe"
     environment:
       - WPE_BCMRPI_CURSOR=1
+    devices:
+      - "/dev/vchiq:/dev/vchiq"
