@@ -7,7 +7,8 @@ services:
     expose:
       - "4200"
   display:
-    build: https://github.com/resin-io-projects/resin-wpe.git
+    build:
+      context: https://github.com/resin-io-projects/resin-wpe.git
     depends_on:
       - frontend
     links:
