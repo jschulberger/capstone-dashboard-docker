@@ -13,7 +13,7 @@ RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 
 # Install app deps
-ADD frontend ./
+COPY . .
 #COPY package*.json ./
 #RUN npm install
 
