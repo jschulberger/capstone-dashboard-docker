@@ -27,7 +27,7 @@ import { IconsComponent } from './components/icons/icons.component';
 import { OdometerComponent } from './components/odometer/odometer.component';
 
 import { SocketIoModule, SocketIoConfig } from 'ng-socket-io';
-const config: SocketIoConfig = { url: 'http://localhost:4200', options: {} };
+const config: SocketIoConfig = { url: 'http://10.5.0.5:4200', options: {} };
 
 @NgModule({
   declarations: [
