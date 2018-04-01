@@ -5,7 +5,7 @@ EXPOSE 4200
 # Add repo, updoot, and install deps
 RUN curl -sL https://deb.nodesource.com/setup_8.x | bash -
 RUN apt-get update && apt-get install -y git make g++ nodejs
-RUN sudo npm install -g @angular/cli
+#RUN sudo npm install -g @angular/cli
 
 RUN mkdir -p /usr/src/app
 
@@ -13,7 +13,7 @@ RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 
 # Install app deps
-COPY . .
+COPY ./frontend/. ./
 #COPY package*.json ./
 #RUN npm install
 
