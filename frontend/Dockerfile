@@ -2,7 +2,7 @@
 FROM resin/rpi-raspbian:jessie
 EXPOSE 4200
 
-RUN apt-get install git make g++
+RUN apt-get install -y git make g++
 
 RUN curl -sL https://deb.nodesource.com/setup_$MAJ_VERSION.x | bash -
 RUN apt-get install -y nodejs
