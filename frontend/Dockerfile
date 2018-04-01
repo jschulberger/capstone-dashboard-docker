@@ -2,12 +2,20 @@
 FROM resin/rpi-raspbian:jessie
 EXPOSE 4200
 
+RUN apt-get install git make g++
+
+RUN curl -sL https://deb.nodesource.com/setup_$MAJ_VERSION.x | bash -
+RUN apt-get install -y nodejs
+RUN sudo npm install -g @angular/cli
+
+RUN mkdir -p /usr/src/app
+
 # Create app directory
-#WORKDIR /usr/src/app
+WORKDIR /usr/src/app
 
 # Install app deps
+COPY . .
 #COPY package*.json ./
-#RUN sudo npm install -g @angular/cli
 #RUN npm install
 
 # Startup command
