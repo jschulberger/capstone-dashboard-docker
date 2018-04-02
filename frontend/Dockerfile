@@ -16,6 +16,7 @@ RUN apk update \
   && sed -i -e "s/bin\/ash/bin\/sh/" /etc/passwd
 
 # Install js-app deps
+RUN npm config set unsafe-perm true
 RUN npm install -g @angular/cli@1.6.7
 
 # Create & set app directory
