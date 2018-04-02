@@ -7,12 +7,16 @@ RUN curl -sL https://deb.nodesource.com/setup_8.x | bash -
 RUN apt-get update && apt-get install -y make g++ nodejs
 #RUN sudo npm install -g @angular/cli
 
+# Create & set app directory
 RUN mkdir -p /usr/src/app
-
-# Create app directory
 WORKDIR /usr/src/app
 
-# Install app deps
+# Install js-app deps
+ARG NPM_CONFIG_PREFIX=~/.npm-global
+RUN /bin/bash -c "source ~/.profile && npm install @angular/cli"
+#source ~/.profile
+#npm install -g @angular/cli
+
 COPY . .
 #COPY package*.json ./
 #RUN npm install

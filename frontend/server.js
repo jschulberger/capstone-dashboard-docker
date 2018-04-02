@@ -12,6 +12,7 @@ client.on("error", function (err) {
 
 var fakenews = true;
 var ecuData = {'rpm':0, 'kph':0};
+var refreshInterval = 16.6;
 
 // Parsers
 app.use(bodyParser.json());
@@ -90,5 +91,5 @@ io.on('connection', function (socket) {
         }
 
         socket.emit('ecuData', ecuData);
-    }, 16.6);
+    }, refreshInterval);
 });
