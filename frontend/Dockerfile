@@ -1,23 +1,28 @@
-#FROM arm32v7/node:carbon
-FROM resin/rpi-raspbian:jessie
+FROM arm32v7/node:8.11.1-alpine
+#FROM resin/rpi-raspbian:jessie
 EXPOSE 4200
 
-SHELL ["/bin/bash", "-c"]
-
 # Add repo, updoot, and install deps
-RUN curl -sL https://deb.nodesource.com/setup_8.x | bash -
-RUN apt-get update && apt-get install -y make g++ nodejs
+#RUN curl -sL https://deb.nodesource.com/setup_8.x | bash -
+#RUN apt-get update && apt-get install -y make g++ nodejs
 #RUN sudo npm install -g @angular/cli
+
+#Linux setup
+RUN apk update \
+  && apk add --update alpine-sdk \
+  && apk del alpine-sdk \
+  && rm -rf /tmp/* /var/cache/apk/* *.tar.gz ~/.npm \
+  && npm cache verify \
+  && sed -i -e "s/bin\/ash/bin\/sh/" /etc/passwd
+
+# Install js-app deps
+RUN npm install -g @angular/cli
 
 # Create & set app directory
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 
-# Install js-app deps
-ARG NPM_CONFIG_PREFIX=~/.npm-global
-RUN npm install -g @angular/cli
-#npm install -g @angular/cli
-
+# Move source over
 COPY . .
 #COPY package*.json ./
 #RUN npm install
