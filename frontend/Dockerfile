@@ -1,4 +1,4 @@
-FROM node:8-alpine
+FROM node:8.11-alpine
 #FROM resin/rpi-raspbian:jessie
 EXPOSE 4200
 
@@ -16,7 +16,7 @@ RUN apk update \
   && sed -i -e "s/bin\/ash/bin\/sh/" /etc/passwd
 
 # Install js-app deps
-RUN npm install -g @angular/cli
+RUN npm install -g @angular/cli@1.6.7
 
 # Create & set app directory
 RUN mkdir -p /usr/src/app
