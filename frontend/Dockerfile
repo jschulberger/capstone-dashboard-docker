@@ -17,7 +17,7 @@ RUN apk update \
 
 # Install js-app deps
 RUN npm config set unsafe-perm true
-RUN npm install -g @angular/cli@1.6.7
+RUN npm install -g @angular/cli
 
 # Create & set app directory
 RUN mkdir -p /usr/src/app
