@@ -1,4 +1,4 @@
-FROM arm32v7/node:8.11.1-alpine
+FROM node:8.11.1-alpine
 #FROM resin/rpi-raspbian:jessie
 EXPOSE 4200
 
