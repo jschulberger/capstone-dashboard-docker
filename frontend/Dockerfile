@@ -15,8 +15,7 @@ WORKDIR /usr/src/app
 
 # Install js-app deps
 ARG NPM_CONFIG_PREFIX=~/.npm-global
-RUN source ~/.profile && npm install @angular/cli
-#source ~/.profile
+RUN npm install -g @angular/cli
 #npm install -g @angular/cli
 
 COPY . .
