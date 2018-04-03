@@ -1,7 +1,7 @@
 #!/bin/bash
-telnet frontend 4200
+echo exit | telnet frontend 4200 &> /dev/null
 while [ $? -ne 0 ]; do
-  telnet frontend 4200
+  echo exit | telnet frontend 4200 &> /dev/null
 done
 
 /wpe-init
