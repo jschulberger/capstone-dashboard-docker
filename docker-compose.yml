@@ -20,3 +20,7 @@ services:
       - "/dev/vchiq:/dev/vchiq"
     links:
       - frontend
+  database:
+    build:
+      context: database
+      dockerfile: Dockerfile
