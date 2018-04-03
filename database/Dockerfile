@@ -1,4 +1,4 @@
-FROM redis:4.0.9-32bit
+FROM arm32v7/redis:4
 
 # Create folder structure
 RUN mkdir -p /etc/redis
