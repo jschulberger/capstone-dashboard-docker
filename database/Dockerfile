@@ -1,4 +1,4 @@
-FROM redis:4-alpine
+FROM redis:4.0.9
 
 # Create folder structure
 RUN mkdir -p /etc/redis
