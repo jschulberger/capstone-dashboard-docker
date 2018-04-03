@@ -38,7 +38,7 @@ app.set('port', port);
 
 const server = http.createServer(app);
 
-server.listen(port, () => console.log(`Running on localhost:${port}`));
+server.listen(port, () => console.log(`Running on 0.0.0.0:${port}`));
 
 // Socket.IO part
 var io = require('socket.io')(server);

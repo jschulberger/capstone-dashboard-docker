@@ -5,7 +5,6 @@ EXPOSE 4200
 # Add repo, updoot, and install deps
 RUN curl -sL https://deb.nodesource.com/setup_8.x | bash -
 RUN apt-get update && apt-get install -y make g++ nodejs
-#RUN sudo npm install -g @angular/cli
 
 # Install js-app deps
 RUN npm config set unsafe-perm true
@@ -17,7 +16,8 @@ WORKDIR /usr/src/app
 
 # Move source over
 COPY . .
-#COPY package*.json ./
+RUN sed -i 's,^\(refreshInterval=\).*,\1'150',' server.js
+RUN sed -i 's,^\(url:\).*,\1'"\"http://frontend:4200\"",' src/app/app.module.ts
 #RUN npm install
 
 # Startup command

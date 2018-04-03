@@ -13,7 +13,7 @@ services:
       - frontend
     environment:
       - WPE_BCMRPI_CURSOR=1
-      - WPE_URL=frontend:4200
+      - WPE_URL=http://frontend:4200
     devices:
       - "/dev/vchiq:/dev/vchiq"
     links:
