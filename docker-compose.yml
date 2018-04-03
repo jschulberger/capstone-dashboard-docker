@@ -8,7 +8,9 @@ services:
     expose:
       - "4200"
   display:
-    image: jschulberger/resin-wpe
+    build:
+      context: display
+      dockerfile: Dockerfile
     depends_on:
       - frontend
     environment:
