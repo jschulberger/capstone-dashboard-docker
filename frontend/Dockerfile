@@ -17,7 +17,7 @@ WORKDIR /usr/src/app
 # Move source over
 COPY . .
 RUN sed -i 's,^\(refreshInterval=\).*,\1'150',' server.js
-RUN sed -i 's,^\(url:\).*,\1'"\"http://frontend:4200\"",' src/app/app.module.ts
+RUN sed -i 's,^\(url:\).*,\1"http://frontend:4200",' src/app/app.module.ts
 #RUN npm install
 
 # Startup command
