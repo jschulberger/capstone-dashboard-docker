@@ -72,11 +72,11 @@ io.on('connection', function (socket) {
                         client.get(key.trim(), function(error, reply) {
                             if (reply != null) {
                                 console.log("Warn: \'", key.trim(), "\' reply is null");
-                                reply = "0"; // if null, force to 0
+                                reply = "0.0"; // if null, force to 0
                             }
                             else if (isNaN(parseFloat(reply))) {
                                 console.log("Warn: \'", key.trim(), "\' reply is NaN");
-                                reply = "0"; // if not parsable, force to 0
+                                reply = "0.0"; // if not parsable, force to 0
                             }
 
                             // finally set the dictionary value
