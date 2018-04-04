@@ -13,7 +13,7 @@ RUN touch /var/log/redis_sock.log
 # Set permissions
 RUN chmod 777 -R /etc/redis
 RUN chmod 777 -R /var/lib/redis
-#RUN chmod 777 -R /var/log/redis
+RUN chmod 777 /var/log/redis_sock.log
 #RUN chmod 777 -R /var/run/redis
 
 CMD [ "redis-server", "/etc/redis/redis.conf" ]
