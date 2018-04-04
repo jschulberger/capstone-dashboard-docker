@@ -21,6 +21,7 @@ COPY . .
 
 # Set connection vars
 RUN sed -i 's,^\(var refreshInterval = \).*,\1'80',' /usr/src/app/server.js
+RUN sed -i 's,^\(var fakenews = \).*,\1'false;',' /usr/src/app/server.js
 RUN sed -i 's,^\(\tclient = redis.createClient(\).*,\1"/tmp/redis.sock");,' /usr/src/app/server.js
 RUN sed -i 's,^\(const myURL = \).*,\1"http://frontend:4200",' /usr/src/app/src/app/app.module.ts
 
