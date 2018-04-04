@@ -7,6 +7,8 @@ services:
     restart: always
     expose:
       - "4200"
+    depends_on:
+      - database
     volumes:
       - redissocket:/tmp
   display:
@@ -28,6 +30,8 @@ services:
       dockerfile: Dockerfile
     volumes:
       - redissocket:/tmp
+  btconn:
+    image: resin/rpi-raspbian:jessie
 
 volumes:
   redissocket:
