@@ -68,8 +68,7 @@ io.on('connection', function (socket) {
                 // reply is "PONG" if the redis server is reachable
                 if (pong == "PONG") {
                     // update every value in dictionary
-                    for (var key in Object.keys(ecuData)) {
-                        console.log("Raw key is ", key, " : String key is ", String(key));
+                    Object.keys(ecuData).forEach(function(key) {
                         client.get(key, function(error, reply) {
                             if (reply != null) {
                                 console.log("Warn: \'", key, "\' reply is null");
@@ -83,7 +82,7 @@ io.on('connection', function (socket) {
                             // finally set the dictionary value
                             ecuData[key] = Math.floor(parseFloat(reply));
                         });
-                    }
+                    });
                 }
                 else {
                     console.log("Error: Redis not available");
