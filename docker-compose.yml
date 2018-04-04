@@ -22,6 +22,8 @@ services:
       - WPE_URL=http://frontend:4200
     devices:
       - "/dev/vchiq:/dev/vchiq"
+      - "/dev/bus/usb/001/004"
+      - "/dev/bus/usb/001/001"
     links:
       - frontend
   database:
