@@ -22,5 +22,5 @@ services:
       - frontend
   database:
     build:
-      context: display
+      context: database
       dockerfile: Dockerfile
