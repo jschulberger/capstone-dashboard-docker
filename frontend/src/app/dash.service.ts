@@ -25,8 +25,8 @@ export class DashService {
   constructor(private socket: Socket) {
 
     socket.on("ecuData", function(msg) {
-      this.speed = msg.kph;
-      this.rpm = msg.rpm;
+      this.speed = msg.SPEED;
+      this.rpm = msg.RPM;
     }.bind(this))
 
     // ipcRenderer.on("speed", function (evt, result) {

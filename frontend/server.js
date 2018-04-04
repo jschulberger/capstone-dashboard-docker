@@ -11,7 +11,7 @@ client.on("error", function (err) {
 });
 
 var fakenews = true;
-var ecuData = {'RPM':0, 'KPH':0};
+var ecuData = {'RPM':0, 'SPEED':0};
 var refreshInterval = 16.6;
 
 // Parsers
@@ -51,15 +51,15 @@ io.on('connection', function (socket) {
 
         // simulating/testing on a desktop
         if (fakenews) {
-            if (ecuData['rpm'] < 7200) {
-                ecuData['rpm'] += 11;
+            if (ecuData['RPM'] < 7200) {
+                ecuData['RPM'] += 11;
             } else {
-                ecuData['rpm'] = 0;
+                ecuData['RPM'] = 0;
             }
-            if (ecuData['kph'] < 120) {
-                ecuData['kph'] += 1;
+            if (ecuData['SPEED'] < 120) {
+                ecuData['SPEED'] += 1;
             } else {
-                ecuData['kph'] = 0;
+                ecuData['SPEED'] = 0;
             }
         }
         // real deployment
