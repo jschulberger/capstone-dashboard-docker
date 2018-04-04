@@ -11,7 +11,7 @@ client.on("error", function (err) {
 });
 
 var fakenews = true;
-var ecuData = {'rpm':0, 'kph':0};
+var ecuData = {'RPM':0, 'KPH':0};
 var refreshInterval = 16.6;
 
 // Parsers
@@ -69,6 +69,7 @@ io.on('connection', function (socket) {
                 if (pong == "PONG") {
                     // update every value in dictionary
                     for (var key in Object.keys(ecuData)) {
+                        console.log("Raw key is ", key, " : String key is ", String(key))
                         client.get(key, function(error, reply) {
                             if (reply != null) {
                                 console.log("Warn: \'", key, "\' reply is null")
