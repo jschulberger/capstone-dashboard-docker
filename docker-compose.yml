@@ -7,6 +7,8 @@ services:
     restart: always
     expose:
       - "4200"
+    volumes:
+      - redissocket:/tmp
   display:
     build:
       context: display
@@ -24,3 +26,8 @@ services:
     build:
       context: database
       dockerfile: Dockerfile
+    volumes:
+      - redissocket:/tmp
+
+volumes:
+  redissocket:
