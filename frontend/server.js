@@ -74,7 +74,7 @@ io.on('connection', function (socket) {
                                 console.log("Warn: \'", key, "\' reply is null")
                                 reply = "0"; // if null, force to 0
                             }
-                            else if (parseFloat(reply).isNaN()) {
+                            else if (isNaN(parseFloat(reply))) {
                                 console.log("Warn: \'", key, "\' reply is NaN")
                                 reply = "0"; // if not parsable, force to 0
                             }
