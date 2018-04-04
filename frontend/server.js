@@ -70,12 +70,12 @@ io.on('connection', function (socket) {
                     // update every value in dictionary
                     Object.keys(ecuData).forEach(function(key) {
                         client.get(key.trim(), function(error, reply) {
-                            if (reply != null) {
-                                console.log("Warn: \'", key.trim(), "\' reply is null");
+                            if (reply == null) {
+                                console.log("Warn: \'", key.trim(), "\' is null");
                                 reply = "0.0"; // if null, force to 0
                             }
                             else if (isNaN(parseFloat(reply))) {
-                                console.log("Warn: \'", key.trim(), "\' reply is NaN");
+                                console.log("Warn: \'", key.trim(), "\' with reply \'", reply.trim(), "\' is NaN");
                                 reply = "0.0"; // if not parsable, force to 0
                             }
 
