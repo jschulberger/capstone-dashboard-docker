@@ -21,6 +21,4 @@ services:
     links:
       - frontend
   database:
-    build:
-      context: database
-      dockerfile: Dockerfile
+    image: "arm32v7/redis:4"
