@@ -69,18 +69,18 @@ io.on('connection', function (socket) {
                 if (pong == "PONG") {
                     // update every value in dictionary
                     Object.keys(ecuData).forEach(function(key) {
-                        client.get(key, function(error, reply) {
+                        client.get(key.trim(), function(error, reply) {
                             if (reply != null) {
-                                console.log("Warn: \'", key, "\' reply is null");
+                                console.log("Warn: \'", key.trim(), "\' reply is null");
                                 reply = "0"; // if null, force to 0
                             }
                             else if (isNaN(parseFloat(reply))) {
-                                console.log("Warn: \'", key, "\' reply is NaN");
+                                console.log("Warn: \'", key.trim(), "\' reply is NaN");
                                 reply = "0"; // if not parsable, force to 0
                             }
 
                             // finally set the dictionary value
-                            ecuData[key] = Math.floor(parseFloat(reply));
+                            ecuData[key.trim()] = Math.floor(parseFloat(reply));
                         });
                     });
                 }
