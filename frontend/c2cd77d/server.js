@@ -10,6 +10,7 @@ client.on("error", function (err) {
     console.log("Error " + err);
 });
 
+var refreshInterval = 16.6;
 var fakenews = true;
 var ecuData = {
                 'SPEED':0,
@@ -45,7 +46,7 @@ app.set('port', port);
 
 const server = http.createServer(app);
 
-server.listen(port, () => console.log(`Running on localhost:${port}`));
+server.listen(port, () => console.log(`Running on 0.0.0.0:${port}`));
 
 // Socket.IO part
 var io = require('socket.io')(server);
@@ -78,16 +79,19 @@ io.on('connection', function (socket) {
             client.ping(function (err, pong) {
                 // reply is "PONG" if the redis server is reachable
                 if (pong == "PONG") {
+                    // update OBKEYS in redis
+                    client.set('OBDKEYS', Object.keys(ecuData).join(':'));
+
                     // update every value in dictionary
                     for (var key in Object.keys(ecuData)) {
                         client.get(key, function(error, reply) {
-                            if (reply != null) {
+                            if (reply == null) {
                                 console.log("Warn: \'", key, "\' reply is null")
-                                reply = "0"; // if null, force to 0
+                                reply = "0.0"; // if null, force to 0
                             }
                             else if (parseFloat(reply).isNaN()) {
                                 console.log("Warn: \'", key, "\' reply is NaN")
-                                reply = "0"; // if not parsable, force to 0
+                                reply = "0.0"; // if not parsable, force to 0
                             }
 
                             // finally set the dictionary value
