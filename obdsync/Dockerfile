@@ -1,4 +1,4 @@
-FROM arm32v7/python:3
+FROM arm32v7/python:3.6-jessie
 
 WORKDIR /usr/src/app
 
