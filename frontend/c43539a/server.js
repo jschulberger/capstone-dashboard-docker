@@ -54,10 +54,6 @@ var io = require('socket.io')(server);
 io.on('connection', function (socket) {
     console.log('New client connected!');
 
-    // let backend know what obd codes we need
-    // hardcoded for now
-    client.set('OBDKEYS', "SPEED:RPM:DISTANCE_SINCE_DTC_CLEAR:OIL_TEMP:COOLANT_TEMP:CONTROL_MODULE_VOLTAGE:FUEL_LEVEL");
-
     // send data to client
     setInterval(function() {
 
@@ -83,21 +79,21 @@ io.on('connection', function (socket) {
                     client.set('OBDKEYS', Object.keys(ecuData).join(':'));
 
                     // update every value in dictionary
-                    for (var key in Object.keys(ecuData)) {
+                    Object.keys(ecuData).forEach(function(key) {
                         client.get(key, function(error, reply) {
                             if (reply == null) {
                                 console.log("Warn: \'", key, "\' reply is null")
-                                reply = "0.0"; // if null, force to 0
+                                reply = "0"; // if null, force to 0
                             }
                             else if (parseFloat(reply).isNaN()) {
                                 console.log("Warn: \'", key, "\' reply is NaN")
-                                reply = "0.0"; // if not parsable, force to 0
+                                reply = "0"; // if not parsable, force to 0
                             }
 
                             // finally set the dictionary value
                             ecuData[key] = Math.floor(parseFloat(reply));
                         });
-                    }
+                    });
                 }
                 else {
                     console.log("Error: Redis not available");
@@ -106,5 +102,5 @@ io.on('connection', function (socket) {
         }
 
         socket.emit('ecuData', ecuData);
-    }, 16.6);
+    }, refreshInterval);
 });

@@ -18,7 +18,7 @@ RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 
 # Move source over
-COPY c2cd77d/. .
+COPY c43539a/. .
 
 # Move package only
 #COPY package*.json ./
