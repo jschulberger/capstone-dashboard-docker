@@ -15,15 +15,12 @@ services:
     build:
       context: display
       dockerfile: Dockerfile
+    privileged: true
     depends_on:
       - frontend
     environment:
       - WPE_BCMRPI_CURSOR=1
       - WPE_URL=http://frontend:4200
-    devices:
-      - "/dev/vchiq:/dev/vchiq"
-      - "/dev/bus/usb/001/004"
-      - "/dev/bus/usb/001/001"
     links:
       - frontend
   database:
