@@ -36,6 +36,8 @@ services:
     build:
       context: obdsync
       dockerfile: Dockerfile
+    volumes:
+      - redissocket:/tmp
 
 volumes:
   redissocket:
