@@ -3,7 +3,7 @@ EXPOSE 4200
 
 # Add repo, updoot, and install deps
 RUN curl -sL https://deb.nodesource.com/setup_8.x | bash -
-RUN apt-get update && apt-get install -y make g++ nodejs
+RUN apt-get update && apt-get install -y make g++ git nodejs
 
 # Install js-app deps
 RUN npm config set unsafe-perm true
@@ -14,7 +14,7 @@ RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 
 # Move source over
-COPY . .
+COPY c2cd77d/. .
 
 # Move package only
 #COPY package*.json ./
