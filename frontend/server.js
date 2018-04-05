@@ -45,6 +45,7 @@ var io = require('socket.io')(server);
 
 io.on('connection', function (socket) {
     console.log('New client connected!');
+    console.log(Object.keys(ecuData));
 
     //send data to client
     setInterval(function() {
