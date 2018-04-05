@@ -3,7 +3,11 @@ EXPOSE 4200
 
 # Add repo, updoot, and install deps
 RUN curl -sL https://deb.nodesource.com/setup_8.x | bash -
-RUN apt-get update && apt-get install -y make g++ git nodejs
+RUN apt-get update && apt-get install -y \
+    make \
+    g++ \
+    nodejs \
+    && rm -rf /var/lib/apt/lists/*
 
 # Install js-app deps
 RUN npm config set unsafe-perm true
