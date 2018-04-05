@@ -68,6 +68,9 @@ io.on('connection', function (socket) {
             client.ping(function (err, pong) {
                 // reply is "PONG" if the redis server is reachable
                 if (pong == "PONG") {
+                    // update OBKEYS in redis
+                    client.set('OBDKEYS', Object.keys(ecuData).join(':'));
+
                     // update every value in dictionary
                     Object.keys(ecuData).forEach(function(key) {
                         client.get(key.trim(), function(error, reply) {
