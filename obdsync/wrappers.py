@@ -30,9 +30,9 @@ class redis_manager(object):
       return False
 
     # Retrieve the key list by querying the db
-    raw_keys = self.db_conn.get(self.update_key).decode("utf-8")
+    raw_keys = self.db_conn.get(self.update_key)
     if raw_keys is not None:
-      self.key_list = raw_keys.split(':')
+      self.key_list = raw_keys.decode("utf-8").split(':')
     else:
       print("[redis] \'{}\' does not exist".format(self.update_key))
       return False
