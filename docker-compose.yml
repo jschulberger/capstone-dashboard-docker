@@ -38,10 +38,6 @@ services:
       dockerfile: Dockerfile
     volumes:
       - redissocket:/tmp
-  bttest:
-    build:
-      context: bttest
-      dockerfile: Dockerfile
 
 volumes:
   redissocket:
