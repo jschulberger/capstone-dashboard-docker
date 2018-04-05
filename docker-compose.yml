@@ -33,6 +33,7 @@ services:
     build:
       context: obdsync
       dockerfile: Dockerfile
+    privileged: true
     volumes:
       - redissocket:/tmp
 
