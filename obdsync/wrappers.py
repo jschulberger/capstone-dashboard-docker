@@ -21,8 +21,8 @@ class redis_manager(object):
       self.db_conn.ping()
       return True
     except:
-      #print("[redis] not reachable at \'{}\'".format(self.db_addr))
-      return False
+      print("[redis] not reachable at \'{}\'".format(self.db_addr))
+    return False
 
   def update_key_list(self):
     # Verify connectability
@@ -30,11 +30,11 @@ class redis_manager(object):
       return False
 
     # Retrieve the key list by querying the db
-    raw_keys = self.db_conn.get(self.update_key)
+    raw_keys = self.db_conn.get(self.update_key).decode("utf-8")
     if raw_keys is not None:
-      self.key_list = raw_keys.strip('\'').split(':')
+      self.key_list = raw_keys.split(':')
     else:
-      #print("[redis] \'{}\' does not exist".format(self.update_key))
+      print("[redis] \'{}\' does not exist".format(self.update_key))
       return False
 
     # Yay!
@@ -49,8 +49,7 @@ class redis_manager(object):
       self.db_conn.set(key, value)
       return True
     except:
-      return False
-      #print("[redis] could not set \'{}\' to \'{}\'".format(key, value))
+      print("[redis] could not set \'{}\' to \'{}\'".format(key, value))
     return False
 
 
@@ -61,7 +60,7 @@ class obd_manager(object):
   def is_alive(self):
     # We really only care if car is reachable or not
     if self.obd_conn.status() is not obd.OBDStatus.CAR_CONNECTED:
-      #print("[obdii] status: \'{}\'".format(self.obd_conn.status()))
+      print("[obdii] status: \'{}\'".format(self.obd_conn.status()))
       return False
     # Car is reachable
     return True
@@ -74,8 +73,7 @@ class obd_manager(object):
         if not response.is_null():
           return response
       except:
-        return None
-        #print("[obdii] \'{}\' command could not be sent".format(request))
+        print("[obdii] \'{}\' command could not be sent".format(request))
 
     # RIP
     return None
