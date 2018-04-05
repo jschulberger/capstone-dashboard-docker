@@ -36,11 +36,14 @@ def main():
   db_manager = redis_manager(db_addr=redis_sock_addr, update_key=update_key)
   obdii_manager = obd_manager()
 
+  while not db_manager.is_alive():
+      db_manager = redis_manager(db_addr=redis_sock_addr, update_key=update_key)
+
+  while not obdii_manager.is_alive():
+      obdii_manager = obd_manager()
+
   # Let's update all of the requested values
   while sync:
-    if not db_manager.is_alive():
-        db_manager = redis_manager(db_addr=redis_sock_addr, update_key=update_key)
-
     db_manager.update_key_list()
     update_start = datetime.now()
     # Iterate through all keys and record reponse in db

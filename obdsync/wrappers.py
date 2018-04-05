@@ -60,7 +60,7 @@ class obd_manager(object):
   def is_alive(self):
     # We really only care if car is reachable or not
     if self.obd_conn.status() is not obd.OBDStatus.CAR_CONNECTED:
-      print("[obdii] status: \'{}\'".format(self.obd_conn.status()))
+      #print("[obdii] status: \'{}\'".format(self.obd_conn.status()))
       return False
     # Car is reachable
     return True
