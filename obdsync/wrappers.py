@@ -10,7 +10,7 @@ class redis_manager(object):
     self.key_list = None
 
     if db_port is None:
-      print("[obdsync] connecting via unix socket")
+      print("[redis] connecting via unix socket")
       self.db_conn = redis.Redis(unix_socket_path=self.db_addr)
     else:
       self.db_port = db_port
