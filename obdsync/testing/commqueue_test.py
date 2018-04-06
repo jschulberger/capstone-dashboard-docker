@@ -6,15 +6,9 @@ import time
 
 
 class TestCommqueue(object):
-    '''
-    def new_commqueue_getinit(cls, *args, **kwargs):
-        return 2
-
-    def test_getinit(self):
-        with mock.patch.object(commqueue, 'getinit', new=self.new_commqueue_getinit):
-            ncq = commqueue()
-            assert ncq.getinit() == 2
-    '''
+    def test_sanity(self):
+        assert True == True
+    
     # Add command
     def test_add_valid_comm(self):
         ncq = commqueue()
@@ -41,7 +35,7 @@ class TestCommqueue(object):
         assert ncq.add('RPM', 10) == True
 
 
-    # Update command queue
+    # Getnext commands
     def test_getnext_none(self):
         ncq = commqueue()
         ncq.add('RPM', 100)
