@@ -34,7 +34,7 @@ class errorhandler(object):
         return None
 
     def getEntriesOfSender(self, sender, remove):
-        if remove is None:
+        if type(remove) is not bool:
             remove = False
         if not self.isTypeStr(sender):
             self.add('eh', 'num entries of sender must be given a string')
