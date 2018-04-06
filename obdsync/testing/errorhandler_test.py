@@ -12,6 +12,11 @@ class TestErrorhandler(object):
         eh = errorhandler()
         assert eh.isTypeStr("msg") == True
 
+    def test_add_msg_valid(self):
+        eh = errorhandler()
+        eh.add('test', 'valid')
+        assert eh.numEntriesOfSender('test') == 1
+
     def test_add_msg_invalid_sender(self):
         eh = errorhandler()
         eh.add(0, 'sender is invalid')
