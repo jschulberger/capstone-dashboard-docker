@@ -47,12 +47,13 @@ io.on('connection', function (socket) {
     var ecuData = {
                     'SPEED':0,
                     'RPM':0,
-                    'DISTANCE_SINCE_DTC_CLEAR':0,
+                };
+                    /*'DISTANCE_SINCE_DTC_CLEAR':0,
                     'OIL_TEMP':0,
                     'COOLANT_TEMP':0,
                     'CONTROL_MODULE_VOLTAGE':0,
                     'FUEL_LEVEL':0
-                  };
+                };*/
 
     // send data to client
     setInterval(function() {
@@ -77,7 +78,7 @@ io.on('connection', function (socket) {
                         //console.log("Warn: \'", key, "\' reply is null")
                         reply = "0"; // if null, force to 0
                     }
-                    else if (parseFloat(reply).isNaN()) {
+                    else if (isNaN(parseFloat(reply))) {
                         //console.log("Warn: \'", key, "\' reply is NaN")
                         reply = "0"; // if not parsable, force to 0
                     }

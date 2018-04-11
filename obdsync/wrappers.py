@@ -31,6 +31,8 @@ class redis_manager(object):
         if not self.is_alive():
             return False
 
+        raw_keys = self.db_conn.get(self.update_key)
+
         # Retrieve the key list by querying the db
         if raw_keys is not None:
             self.key_list = raw_keys.decode("utf-8").split(':')
@@ -76,7 +78,7 @@ class obd_manager(object):
         # Make sure we can reach the vehicle
         if self.is_alive():
             try:
-                response = self.obd_conn.query(OBD.commands[request])
+                response = self.obd_conn.query(obd.commands[request])
                 if not response.is_null():
                     return response
             except:

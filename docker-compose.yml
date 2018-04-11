@@ -33,9 +33,12 @@ services:
     build:
       context: obdsync
       dockerfile: Dockerfile
-    privileged: true
+    labels:
+        io.resin.features.dbus: '1'
+    network_mode: "host"
     volumes:
       - redissocket:/tmp
+    privileged: true
 
 volumes:
   redissocket:
