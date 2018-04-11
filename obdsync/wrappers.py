@@ -56,7 +56,8 @@ class redis_manager(object):
 
 class obd_manager(object):
     def __init__(self, port=None):
-        self.obd_conn = obd.OBD(portstr=port, fast=True)
+        #self.obd_conn = obd.OBD(portstr=port, fast=True)
+        self.obd_conn = obd.OBD()
 
     def is_alive(self):
         # We really only care if car is reachable or not

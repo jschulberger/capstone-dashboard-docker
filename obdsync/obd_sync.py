@@ -8,7 +8,7 @@ from wrappers import redis_manager
 from wrappers import obd_manager
 
 # Command queue
-from commqueue import commqueue
+#from commqueue import commqueue
 
 # Constants
 # TODO: Explicitly set rfcomm port/path (config)
@@ -38,12 +38,10 @@ def main():
     # Set all values from config
     db_manager = redis_manager(db_addr=redis_sock_addr, update_key=update_key)
     obdii_manager = obd_manager()
-    queue = commqueue()
 
     while not db_manager.is_alive():
         db_manager = redis_manager(
             db_addr=redis_sock_addr, update_key=update_key)
-    queue = commqueue()
 
     while not obdii_manager.is_alive():
         obdii_manager = obd_manager()
