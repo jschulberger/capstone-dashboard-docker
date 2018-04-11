@@ -3,24 +3,13 @@ const bodyParser = require('body-parser');
 const path = require('path');
 const http = require('http');
 const app = express();
-var redis = require("redis"),
-    client = redis.createClient();
+const redis = require("redis");
 
+var refreshInterval = 16.6;
+var client = redis.createClient();
 client.on("error", function (err) {
     console.log("Error " + err);
 });
-
-var refreshInterval = 16.6;
-var fakenews = true;
-var ecuData = {
-                'SPEED':0,
-                'RPM':0,
-                'DISTANCE_SINCE_DTC_CLEAR':0,
-                'OIL_TEMP':0,
-                'COOLANT_TEMP':0,
-                'CONTROL_MODULE_VOLTAGE':0,
-                'FUEL_LEVEL':0
-              };
 
 // Parsers
 app.use(bodyParser.json());
@@ -53,12 +42,53 @@ var io = require('socket.io')(server);
 
 io.on('connection', function (socket) {
     console.log('New client connected!');
+    var redisUp = false;
+    var fakenews = true;
+    var ecuData = {
+                    'SPEED':0,
+                    'RPM':0,
+                    'DISTANCE_SINCE_DTC_CLEAR':0,
+                    'OIL_TEMP':0,
+                    'COOLANT_TEMP':0,
+                    'CONTROL_MODULE_VOLTAGE':0,
+                    'FUEL_LEVEL':0
+                  };
 
     // send data to client
     setInterval(function() {
+        // reply is "PONG" if the redis server is reachable
+        client.ping(function (err, reply) {
+            redisUp = (reply === 'PONG');
+        });
+        // check if vehicle data or simulated data
+        client.get("FAKENEWS", function(error, reply) {
+            fakenews = (reply !== 'false');
+        });
 
-        // simulating/testing on a desktop
-        if (fakenews) {
+        // vehicle data
+        if (redisUp && !fakenews) {
+            // update OBKEYS in redis
+            client.set('OBDKEYS', Object.keys(ecuData).join(':'));
+
+            // poll vehicle for each piece of data
+            Object.keys(ecuData).forEach(function(key) {
+                client.get(key, function(error, reply) {
+                    if (reply == null) {
+                        //console.log("Warn: \'", key, "\' reply is null")
+                        reply = "0"; // if null, force to 0
+                    }
+                    else if (parseFloat(reply).isNaN()) {
+                        //console.log("Warn: \'", key, "\' reply is NaN")
+                        reply = "0"; // if not parsable, force to 0
+                    }
+
+                    // finally set the dictionary value
+                    ecuData[key] = Math.floor(parseFloat(reply));
+                });
+            });
+        }
+        // simulated
+        else {
             if (ecuData['RPM'] < 7200) {
                 ecuData['RPM'] += 11;
             } else {
@@ -70,37 +100,8 @@ io.on('connection', function (socket) {
                 ecuData['SPEED'] = 0;
             }
         }
-        // real deployment
-        else {
-            client.ping(function (err, pong) {
-                // reply is "PONG" if the redis server is reachable
-                if (pong == "PONG") {
-                    // update OBKEYS in redis
-                    client.set('OBDKEYS', Object.keys(ecuData).join(':'));
 
-                    // update every value in dictionary
-                    Object.keys(ecuData).forEach(function(key) {
-                        client.get(key, function(error, reply) {
-                            if (reply == null) {
-                                console.log("Warn: \'", key, "\' reply is null")
-                                reply = "0"; // if null, force to 0
-                            }
-                            else if (parseFloat(reply).isNaN()) {
-                                console.log("Warn: \'", key, "\' reply is NaN")
-                                reply = "0"; // if not parsable, force to 0
-                            }
-
-                            // finally set the dictionary value
-                            ecuData[key] = Math.floor(parseFloat(reply));
-                        });
-                    });
-                }
-                else {
-                    console.log("Error: Redis not available");
-                }
-            });
-        }
-
+        // emit data to front-end
         socket.emit('ecuData', ecuData);
     }, refreshInterval);
 });

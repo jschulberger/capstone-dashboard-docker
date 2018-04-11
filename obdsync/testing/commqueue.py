@@ -14,10 +14,12 @@ class commqueue(object):
     def sortQueue(self):
         self.queue = sorted(self.queue.items(),key = operator.itemgetter(1),reverse = False)
 
-    def add(self, command, interval):
+    def register(self, command, interval):
         if not type(command) is str:
             return False
         if not type(interval) is int:
+            return False
+        if command in commlist:
             return False
         if not obd.commands.has_name(command):
             return False
@@ -36,6 +38,7 @@ class commqueue(object):
             for command, interval in self.queue.items():
                 self.queue[command] = interval - (self.timeInMilli() - self.lastupdate)
             self.lastupdate = self.timeInMilli()
+            self.sortQueue()
 
     def getnext(self):
         for command, interval in self.queue.items():

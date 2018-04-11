@@ -20,13 +20,9 @@ WORKDIR /usr/src/app
 # Move source over
 COPY c43539a/. .
 
-# Move package only
-#COPY package*.json ./
-
 # Set connection vars
-RUN sed -i 's,^\(var refreshInterval = \).*,\180;,' /usr/src/app/server.js
-RUN sed -i 's,^\(var fakenews = \).*,\1false;,' /usr/src/app/server.js
-RUN sed -i 's,^\(    client = redis.createClient(\).*,\1"/tmp/redis.sock");,' /usr/src/app/server.js
+RUN sed -i 's,^\(var refreshInterval = \).*,\190;,' /usr/src/app/server.js
+RUN sed -i 's,^\(var client = redis.createClient(\).*,\1"/tmp/redis.sock");,' /usr/src/app/server.js
 RUN sed -i 's,^\(const myURL = \).*,\1"http://frontend:4200",' /usr/src/app/src/app/app.module.ts
 
 # Install the app
