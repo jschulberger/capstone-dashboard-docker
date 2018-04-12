@@ -39,6 +39,16 @@ services:
     volumes:
       - redissocket:/tmp
     privileged: true
+  bt-connection:
+      build:
+          context: bt-connection
+          dockerfile: Dockerfile
+      network_mode: "host"
+      privileged: true
+      labels:
+          io.resin.features.dbus: '1'
+      volumes:
+        - redissocket:/tmp
 
 volumes:
   redissocket:

@@ -36,7 +36,7 @@ export class DashService {
       this.odom = msg.DISTANCE_SINCE_DTC_CLEAR;
       this.oil = msg.OIL_TEMP;
       this.coolant = msg.COOLANT_TEMP;
-      this.battery = msg.CONTROL_MODULE_VOLTAGE;
+      this.battery = msg.ELM_VOLTAGE;
       this.fuelLvl = msg.FUEL_LEVEL;
     }.bind(this))
 

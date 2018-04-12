@@ -8,7 +8,7 @@ from wrappers import redis_manager
 from wrappers import obd_manager
 
 # Command queue
-#from commqueue import commqueue
+from commqueue import commqueue
 
 # Constants
 # TODO: Explicitly set rfcomm port/path (config)
@@ -35,20 +35,43 @@ def main():
     except:
         print("[obdsync] could not read config")
 
-    # Set all values from config
-    db_manager = redis_manager(db_addr=redis_sock_addr, update_key=update_key)
+    # Initialize obd reader, quit if not available
     obdii_manager = obd_manager()
+    if not obdii_manager.is_alive():
+        print('[obdsync] obdii device is not available')
+        quit()
 
-    while not db_manager.is_alive():
-        db_manager = redis_manager(
-            db_addr=redis_sock_addr, update_key=update_key)
+    # Initialize redis manager, quit if not available
+    db_manager = redis_manager(db_addr=redis_sock_addr, update_key=update_key)
+    if not db_manager.is_alive():
+        print('[obdsync] redis is not available')
+        quit()
 
-    while not obdii_manager.is_alive():
-        obdii_manager = obd_manager()
+    pri_queue = commqueue()
+    commands = db_manager.get_key_list()
+    if commands is None:
+        print('[obdsync] OBD key list is empty')
+        quit()
+    else:
+        for comm in commands:
+            if comm == "RPM" or comm == "SPEED":
+                pri_queue.register(comm, 70)
+            else:
+                pri_queue.register(comm, 5000)
 
     # Let's update all of the requested values
     while sync:
+        if obdii_manager.is_alive() and db_manager.is_alive():
+            query = pri_queue.getnext()
+            if query is not None:
+                obd_response = obdii_manager.query_value(query)
+                if obd_response is not None:
+                    db_manager.set_value(key, obd_response)
+                else:
+                    db_manager.set_value(key, "-1")
+        '''
         update_start = datetime.now()
+
         db_manager.update_key_list()
 
         # Iterate through all keys and record reponse in db
@@ -64,8 +87,8 @@ def main():
         wait_time = update_interval - \
             (datetime.now() - update_start).total_seconds()
         if wait_time > 0:
-            #print("[main] sleeping for {} seconds".format(str(wait_time)))
             sleep(wait_time)
+        '''
 
 
 if __name__ == "__main__":

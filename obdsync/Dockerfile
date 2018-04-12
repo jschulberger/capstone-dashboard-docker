@@ -1,6 +1,8 @@
 FROM arm32v7/python:3.6-jessie
 
-RUN apt-get update && apt-get -yq install bluez
+RUN apt-get update && apt-get install -y \
+    bluez \
+    && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /usr/src/app
 

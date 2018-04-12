@@ -12,7 +12,7 @@ class commqueue(object):
         return int(round(time.time() * 1000))
 
     def sortQueue(self):
-        self.queue = sorted(self.queue.items(),key = operator.itemgetter(1),reverse = False)
+        self.queue = sorted(self.queue.items(), key = operator.itemgetter(1), reverse = False)
 
     def register(self, command, interval):
         if not type(command) is str:
@@ -41,6 +41,7 @@ class commqueue(object):
             self.sortQueue()
 
     def getnext(self):
+        self.update()
         for command, interval in self.queue.items():
             if interval < 0:
                 self.queue[command] = self.commlist[command]

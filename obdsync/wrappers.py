@@ -13,6 +13,7 @@ class redis_manager(object):
         if db_port is None:
             print("[redis] connecting via unix socket")
             self.db_conn = redis.Redis(unix_socket_path=self.db_addr)
+            print('[redis] connection successful')
         else:
             self.db_port = db_port
             self.db_conn = redis.RedisStrict(
@@ -42,6 +43,17 @@ class redis_manager(object):
 
         # Yay!
         return True
+
+    def get_key_list(self):
+        if not self.is_alive():
+            return None
+
+        raw_keys = self.db_conn.get(self.update_key)
+
+        if raw_keys is None:
+            return None
+
+        return raw_keys.decode("utf-8").split(':')
 
     def set_value(self, key, value):
         # Verify connectability
