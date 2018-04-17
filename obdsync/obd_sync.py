@@ -64,11 +64,12 @@ def main():
         if obdii_manager.is_alive() and db_manager.is_alive():
             query = pri_queue.getnext()
             if query is not None:
+                print("Getting" + query)
                 obd_response = obdii_manager.query_value(query)
                 if obd_response is not None:
-                    db_manager.set_value(key, obd_response)
+                    db_manager.set_value(query, obd_response)
                 else:
-                    db_manager.set_value(key, "-1")
+                    db_manager.set_value(query, "-1")
         '''
         update_start = datetime.now()
 

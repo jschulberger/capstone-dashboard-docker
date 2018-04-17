@@ -1,6 +1,6 @@
 import obd
 import time
-import operator
+from operator import itemgetter
 
 class commqueue(object):
     def __init__(self):
@@ -19,7 +19,7 @@ class commqueue(object):
             return False
         if not type(interval) is int:
             return False
-        if command in commlist:
+        if command in self.commlist:
             return False
         if not obd.commands.has_name(command):
             return False
@@ -38,11 +38,10 @@ class commqueue(object):
             for command, interval in self.queue.items():
                 self.queue[command] = interval - (self.timeInMilli() - self.lastupdate)
             self.lastupdate = self.timeInMilli()
-            self.sortQueue()
 
     def getnext(self):
         self.update()
-        for command, interval in self.queue.items():
+        for command, interval in sorted(self.queue.items(), key = itemgetter(1), False):
             if interval < 0:
                 self.queue[command] = self.commlist[command]
                 return command
