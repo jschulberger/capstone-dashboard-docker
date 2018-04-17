@@ -1,4 +1,4 @@
-FROM arm32v7/python:3.6-jessie
+FROM arm32v7/python:3.6.5-slim-stretch
 
 RUN apt-get update && apt-get install -y \
     bluez \
