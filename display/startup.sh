@@ -1,12 +1,21 @@
 #!/bin/bash
 
-# Wait until frontend is ready
-echo "[display] Waiting for frontend..."
+echo "Waiting for front-end..."
 echo exit | telnet frontend 4200 &> /dev/null
 while [ $? -ne 0 ]; do
-  echo exit | telnet frontend 4200 &> /dev/null
+    echo exit | telnet frontend 4200 &> /dev/null
 done
-echo "[display] Frontend is alive!"
+echo "Front-end is alive"
 
-# Start main script
-/wpe-init
+# Launch wpe display program
+/wpe-init &
+
+# Keep checking front-end availability
+while [ $? -eq 0 ]; do
+    sleep 5s
+    echo exit | telnet frontend 4200 &> /dev/null
+done
+
+# Front-end must have died, kill display
+echo "Front-end has died, killing display..."
+exit 1

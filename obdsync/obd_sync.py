@@ -64,7 +64,7 @@ def main():
         if obdii_manager.is_alive() and db_manager.is_alive():
             query = pri_queue.getnext()
             if query is not None:
-                print("Getting" + query)
+                print("Getting " + query)
                 obd_response = obdii_manager.query_value(query)
                 if obd_response is not None:
                     db_manager.set_value(query, obd_response)
