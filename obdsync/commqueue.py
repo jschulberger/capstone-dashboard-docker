@@ -41,7 +41,7 @@ class commqueue(object):
 
     def getnext(self):
         self.update()
-        for command, interval in sorted(self.queue.items(), key = itemgetter(1), False):
+        for command, interval in sorted(self.queue.items(), key = itemgetter(1), reverse = True):
             if interval < 0:
                 self.queue[command] = self.commlist[command]
                 return command
