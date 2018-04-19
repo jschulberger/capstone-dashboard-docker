@@ -21,7 +21,7 @@ WORKDIR /usr/src/app
 COPY c43539a/. .
 
 # Set connection vars
-RUN sed -i 's,^\(var refreshInterval = \).*,\135;,' /usr/src/app/server.js
+RUN sed -i 's,^\(var refreshInterval = \).*,\170;,' /usr/src/app/server.js
 RUN sed -i 's,^\(var client = redis.createClient(\).*,\1"/tmp/redis.sock");,' /usr/src/app/server.js
 RUN sed -i 's,^\(const myURL = \).*,\1"http://frontend:4200",' /usr/src/app/src/app/app.module.ts
 
