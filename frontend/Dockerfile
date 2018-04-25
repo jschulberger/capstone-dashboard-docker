@@ -1,7 +1,7 @@
 ###################
 # Build Container #
 ###################
-FROM resin/rpi-raspbian:jessie as builder
+FROM resin/rpi-raspbian:stretch as builder
 
 # Add repo, updoot, and install deps
 RUN curl -sL https://deb.nodesource.com/setup_8.x | bash -
@@ -33,12 +33,12 @@ RUN sed -i 's,^\(const myURL = \).*,\1"http://frontend:4200";,' /usr/src/app/src
 RUN npm install
 
 # Build final files
-RUN npm run-script build
+RUN ng build
 
 ###################
 # Final container #
 ###################
-FROM resin/rpi-raspbian:jessie
+FROM resin/rpi-raspbian:stretch
 EXPOSE 4200
 
 # Add repo, updoot, and install deps
