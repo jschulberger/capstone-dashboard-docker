@@ -33,7 +33,7 @@ RUN sed -i 's,^\(const myURL = \).*,\1"http://frontend:4200";,' /usr/src/app/src
 RUN npm install
 
 # Build final files
-RUN ng build
+RUN npm run-script build
 
 ###################
 # Final container #
