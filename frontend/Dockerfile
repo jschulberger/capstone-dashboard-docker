@@ -1,7 +1,7 @@
 ###################
 # Build Container #
 ###################
-FROM resin/rpi-raspbian:stretch as builder
+FROM resin/rpi-raspbian:jessie as builder
 
 # Add repo, updoot, and install deps
 RUN curl -sL https://deb.nodesource.com/setup_8.x | bash -
@@ -38,7 +38,7 @@ RUN ng build
 ###################
 # Final container #
 ###################
-FROM resin/rpi-raspbian:stretch
+FROM resin/rpi-raspbian:jessie
 EXPOSE 4200
 
 # Add repo, updoot, and install deps
