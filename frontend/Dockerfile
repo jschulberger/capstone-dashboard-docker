@@ -21,6 +21,9 @@ RUN npm install -g @angular/cli
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 
+# Allow forcing rebuild
+ARG CACHEBUST=1
+
 # Retrieve source
 RUN git clone https://github.com/matthewfortier/Capstone-Dashboard .
 

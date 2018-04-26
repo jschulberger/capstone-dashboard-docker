@@ -1,11 +1,12 @@
+[![Build Status](https://travis-ci.org/jschulberger/capstone-dashboard-docker.svg?branch=master)](https://travis-ci.org/jschulberger/capstone-dashboard-docker)
 # Capstone Dashboard Docker
 A collection of containers that are designed to be deployed via Resin.IO to remote devices. Each container is a dependency that the front-end requires to gather data from a vehicle.
 
 # How to Deploy
-
+n/a
 
 # About the project
-
+n/a
 
 # Container Descriptions
 bt-connection

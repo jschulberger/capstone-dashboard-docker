@@ -47,30 +47,8 @@ def main():
         print('[obdsync] redis is not available')
         quit()
 
-    pri_queue = commqueue()
-    commands = db_manager.get_key_list()
-    if commands is None:
-        print('[obdsync] OBD key list is empty')
-        quit()
-    else:
-        for comm in commands:
-            if comm == "RPM" or comm == "SPEED":
-                pri_queue.register(comm, 70)
-            else:
-                pri_queue.register(comm, 5000)
-
     # Let's update all of the requested values
     while sync:
-        if obdii_manager.is_alive() and db_manager.is_alive():
-            query = pri_queue.getnext()
-            if query is not None:
-                print("Getting " + query)
-                obd_response = obdii_manager.query_value(query)
-                if obd_response is not None:
-                    db_manager.set_value(query, obd_response)
-                else:
-                    db_manager.set_value(query, "-1")
-        '''
         update_start = datetime.now()
 
         db_manager.update_key_list()
@@ -89,7 +67,6 @@ def main():
             (datetime.now() - update_start).total_seconds()
         if wait_time > 0:
             sleep(wait_time)
-        '''
 
 
 if __name__ == "__main__":
