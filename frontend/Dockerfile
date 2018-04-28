@@ -22,7 +22,7 @@ RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 
 # Allow forcing rebuild
-ARG CACHEBUST=2
+ARG CACHEBUST=3
 
 # Retrieve source
 RUN git clone https://github.com/matthewfortier/Capstone-Dashboard .
